@@ -6,5 +6,8 @@
         public string Nombre { get; set;}
         public bool Activa {  get; set;}
 
+        public ICollection<Usuario>? Usuarios { get; set; }
+
+
     }
 }

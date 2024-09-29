@@ -11,11 +11,17 @@ namespace ServiciosAdicionales.Models
 
         [ForeignKey("Sector")]
         public int SectorId { get; set; }
+        public Sector sector { get; set; }
 
         [ForeignKey("Empresa")]
         public int EmpresaId { get; set; }
+        public Empresa empresa{ get; set; }
         public bool Solicitante { get; set; }
         public bool Activo {  get; set; }
+
+
+        public ICollection<PedidoDeServicios>? PedidosComoSolicitante { get; set; }
+        public ICollection<PedidoDeServicios>? PedidosComoEmpleado { get; set; }
 
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServiciosAdicionales.Repository;
 
@@ -10,9 +11,11 @@ using ServiciosAdicionales.Repository;
 namespace ServiciosAdicionales.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240929142243_Modelsdb")]
+    partial class Modelsdb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
@@ -57,10 +60,6 @@ namespace ServiciosAdicionales.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EmpleadoId");
-
-                    b.HasIndex("SolicitanteId");
 
                     b.ToTable("PedidosDeServicios");
                 });
@@ -114,17 +113,15 @@ namespace ServiciosAdicionales.Migrations
                     b.Property<int>("PedidoDeServicioId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("TipoAdicionalId")
+                    b.Property<int?>("PedidoDeServiciosId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("pedidoDeServiciosId")
+                    b.Property<int>("TipoAdicionalId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TipoAdicionalId");
-
-                    b.HasIndex("pedidoDeServiciosId");
+                    b.HasIndex("PedidoDeServiciosId");
 
                     b.ToTable("Servicios");
                 });
@@ -197,90 +194,19 @@ namespace ServiciosAdicionales.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmpresaId");
-
-                    b.HasIndex("SectorId");
-
                     b.ToTable("Usuarios");
-                });
-
-            modelBuilder.Entity("ServiciosAdicionales.Models.PedidoDeServicios", b =>
-                {
-                    b.HasOne("ServiciosAdicionales.Models.Usuario", "Empleado")
-                        .WithMany("PedidosComoEmpleado")
-                        .HasForeignKey("EmpleadoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ServiciosAdicionales.Models.Usuario", "Solicitante")
-                        .WithMany("PedidosComoSolicitante")
-                        .HasForeignKey("SolicitanteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Empleado");
-
-                    b.Navigation("Solicitante");
                 });
 
             modelBuilder.Entity("ServiciosAdicionales.Models.Servicio", b =>
                 {
-                    b.HasOne("ServiciosAdicionales.Models.TipoAdicional", "tipoAdicional")
-                        .WithMany()
-                        .HasForeignKey("TipoAdicionalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ServiciosAdicionales.Models.PedidoDeServicios", "pedidoDeServicios")
+                    b.HasOne("ServiciosAdicionales.Models.PedidoDeServicios", null)
                         .WithMany("Servicios")
-                        .HasForeignKey("pedidoDeServiciosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("pedidoDeServicios");
-
-                    b.Navigation("tipoAdicional");
-                });
-
-            modelBuilder.Entity("ServiciosAdicionales.Models.Usuario", b =>
-                {
-                    b.HasOne("ServiciosAdicionales.Models.Empresa", "empresa")
-                        .WithMany("Usuarios")
-                        .HasForeignKey("EmpresaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ServiciosAdicionales.Models.Sector", "sector")
-                        .WithMany("Usuarios")
-                        .HasForeignKey("SectorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("empresa");
-
-                    b.Navigation("sector");
-                });
-
-            modelBuilder.Entity("ServiciosAdicionales.Models.Empresa", b =>
-                {
-                    b.Navigation("Usuarios");
+                        .HasForeignKey("PedidoDeServiciosId");
                 });
 
             modelBuilder.Entity("ServiciosAdicionales.Models.PedidoDeServicios", b =>
                 {
                     b.Navigation("Servicios");
-                });
-
-            modelBuilder.Entity("ServiciosAdicionales.Models.Sector", b =>
-                {
-                    b.Navigation("Usuarios");
-                });
-
-            modelBuilder.Entity("ServiciosAdicionales.Models.Usuario", b =>
-                {
-                    b.Navigation("PedidosComoEmpleado");
-
-                    b.Navigation("PedidosComoSolicitante");
                 });
 #pragma warning restore 612, 618
         }
