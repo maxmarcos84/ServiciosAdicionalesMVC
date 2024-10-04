@@ -29,9 +29,17 @@ public class SectorService : ISectorService
 
     public async Task<Sector> CrearSectorAsync(Sector sector)
     {
-        _context.Sector.Add(sector);
-        await _context.SaveChangesAsync();
-        return sector;
+        try
+        {
+            _context.Sector.Add(sector);
+            await _context.SaveChangesAsync();
+            return sector;
+        }
+        catch(Exception ex)
+        {
+            throw new Exception("Se produjo un error al crear Sector: "+ex.ToString());
+        }
+        
     }
 
     public async Task<bool> EliminarSectorAsync(int id)
@@ -47,7 +55,7 @@ public class SectorService : ISectorService
 
     public async Task<IEnumerable<Sector>> ObtenerSectoresAsync()
     {
-        return await _context.Sector.Where(s => s.Activo).ToListAsync();
+        return await _context.Sector.Where(s => s.Activo == true).ToListAsync();
     }
 
     public async Task<Sector?> ObtenerSectorsPorIdAsync(int id)

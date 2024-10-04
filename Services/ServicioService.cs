@@ -1,4 +1,5 @@
 using System;
+using Microsoft.EntityFrameworkCore;
 using ServiciosAdicionales.Models;
 using ServiciosAdicionales.Repository;
 using ServiciosAdicionales.Services.Interfaces;
@@ -41,18 +42,35 @@ public class ServicioService : IServicioService
         }
     }
 
-    public Task<bool> EliminarServicioAsync(int id)
+    public async Task<bool> EliminarServicioAsync(int id)
     {
-        throw new NotImplementedException();
+        var servicioExiste = await _context.Servicios.FindAsync(id);
+        if(servicioExiste == null)
+        {
+            return false;
+        }
+        try
+        {
+            _context.Servicios.Remove(servicioExiste);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        catch(Exception ex)
+        {
+            throw new Exception("Se produjo un error al eliminar el servicio: "+ex.ToString());
+        }
+        
     }
 
-    public Task<Servicio?> ObtenerServicioPorIdAsync(int id)
+    public async Task<Servicio?> ObtenerServicioPorIdAsync(int id)
     {
-        throw new NotImplementedException();
+        return await _context.Servicios.FirstOrDefaultAsync(s => s.Id == id);
     }
 
-    public Task<IEnumerable<Servicio>> ObtenerServiciosAsync()
+    public async Task<IEnumerable<Servicio>> ObtenerServiciosAsync()
     {
-        throw new NotImplementedException();
+        return await _context.Servicios
+            .Include(s => s.tipoAdicional)
+            .ToListAsync();
     }
 }

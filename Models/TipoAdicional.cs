@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
         public string Descripcion { get; set; }
-        public bool IsActive { get; set; } = true;
+        public bool Activo { get; set; } = true;
     }
 }
