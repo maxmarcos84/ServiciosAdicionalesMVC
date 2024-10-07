@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ServiciosAdicionales.Models;
 
 namespace ServiciosAdicionales.Repository
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<Usuario>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -17,6 +18,7 @@ namespace ServiciosAdicionales.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder); // Necesario para que Identity configure las tablas relacionadas
             // Relación de PedidoDeServicios con Usuario como Solicitante
             modelBuilder.Entity<PedidoDeServicios>()
                 .HasOne(p => p.Solicitante)

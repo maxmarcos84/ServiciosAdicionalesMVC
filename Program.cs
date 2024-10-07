@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ServiciosAdicionales.Models;
 using ServiciosAdicionales.Repository;
 using ServiciosAdicionales.Services;
 using ServiciosAdicionales.Services.Interfaces;
@@ -18,6 +20,16 @@ builder.Services.AddScoped<IServicioService, ServicioService>();
 builder.Services.AddScoped<ISitioService, SitioService>();
 builder.Services.AddScoped<ITipoAdicionalService, TipoAdicionalService>();
 
+builder.Services.AddIdentity<Usuario, IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login"; // Redirige a la página de Login
+    options.AccessDeniedPath = "/Account/AccessDenied"; // Página de acceso denegado
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(60); // Tiempo de expiración de la cookie
+    options.SlidingExpiration = true; // Extiende la sesión si el usuario sigue activo
+});
 
 var app = builder.Build();
 
@@ -34,10 +46,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// Activar autenticación y autorización
+app.UseAuthentication(); // Necesario para ASP.NET Identity
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.Run();

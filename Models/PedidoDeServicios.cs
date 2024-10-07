@@ -10,11 +10,11 @@ public class PedidoDeServicios
     public int Id { get; set; }
 
     [ForeignKey("Solicitante")]
-    public int SolicitanteId { get; set; }
+    public string SolicitanteId { get; set; }
     public Usuario Solicitante { get; set; }
 
     [ForeignKey("Empleado")]
-    public int EmpleadoId { get; set; }
+    public string EmpleadoId { get; set; }
     public Usuario Empleado { get; set; }
 
     [ForeignKey("Sitio")]

@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 namespace ServiciosAdicionales.Models
 {
-    public class Usuario
+    public class Usuario : IdentityUser
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
@@ -10,12 +11,12 @@ namespace ServiciosAdicionales.Models
         public string IGG { get; set; }
 
         [ForeignKey("Sector")]
-        public int SectorId { get; set; }
-        public Sector sector { get; set; }
+        public int? SectorId { get; set; }
+        public Sector? sector { get; set; }
 
         [ForeignKey("Empresa")]
-        public int EmpresaId { get; set; }
-        public Empresa empresa{ get; set; }
+        public int? EmpresaId { get; set; }
+        public Empresa? empresa{ get; set; }
         public bool Solicitante { get; set; }
         public bool Activo {  get; set; }
 
