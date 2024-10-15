@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using ServiciosAdicionales.Models;
 
 namespace ServiciosAdicionales.ViewModels;
 
@@ -25,5 +26,7 @@ public class RegistroViewModel
     [Display(Name = "Confirmar contraseña")]
     [Compare("Password", ErrorMessage = "Las contraseñas no coinciden.")]
     public string ConfirmPassword { get; set; }
+
+    
 
 }
