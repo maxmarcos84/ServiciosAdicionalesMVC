@@ -29,9 +29,17 @@ public class EmpresaService : IEmpresaService
 
     public async Task<Empresa> CrearEmpresaAsync(Empresa empresa)
     {
-        _context.Empresas.Add(empresa);
-        await _context.SaveChangesAsync();
-        return empresa;
+        try
+        {
+            _context.Empresas.Add(empresa);
+            await _context.SaveChangesAsync();
+            return empresa;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Se produjo un error inesperado al intentar crear empresa: " + ex.ToString());
+        }
+        
     }
 
     public async Task<bool> EliminarEmpresaAsync(int id)

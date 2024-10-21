@@ -1,8 +1,69 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Tus Servicios";
 }
 
+@model string
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Tus Servicios Adicionales</h1>
+    @if (Model.Any())
+    {
+        Model.ToString();
+    }
+    <button type="button" class="btn btn-primary">Nuevo Pedido de Servicio</button>
+    <div class="container text-center" style="margin-top:10px;">
+        <div class="row">           
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        
+                        <th scope="col">ID</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Cant. Servicios</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Ver</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>3</td>
+                        <td>10-10-2024</td>
+                        <td>2</td>
+                        <td>En curso</td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-sm">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </td>
+                        
+                    </tr>                    
+                    <tr>                        
+                        <td>2</td>
+                        <td>24-09-2024</td>
+                        <td>6</td>
+                        <td>Finalizado</td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-sm">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </td>                        
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>01-08-2024</td>
+                        <td>4</td>
+                        <td>Finalizado</td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-sm">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </td>
+                        
+                    </tr>                  
+                  
+                </tbody>
+
+            </table>
+        </div>
+    </div>
 </div>
