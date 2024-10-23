@@ -65,6 +65,17 @@ public class PedidoDeServiciosService : IPedidoDeServicioService
         return await _context.PedidosDeServicios.FirstOrDefaultAsync(p => p.Id == id);
     }
 
+    public async Task<IEnumerable<PedidoDeServicios>> ObtenerPedidosDeSerivicioPorEmpleado(Usuario empleado)
+    {
+        return await _context.PedidosDeServicios.Where(p => p.Empleado == empleado && 
+            p.FechaSolicitado.Year == DateTime.Now.Year).ToListAsync();
+    }
+
+    public async Task<IEnumerable<PedidoDeServicios>> ObtenerPedidosDeSerivicioPorSolicitante(Usuario solicitante)
+    {
+        return await _context.PedidosDeServicios.Where(p => p.Solicitante == solicitante && 
+            p.FechaSolicitado.Year == DateTime.Now.Year).ToListAsync();
+    }
     public async Task<IEnumerable<PedidoDeServicios>> ObtenerPedidosDeServicioAsync()
     {
         return await _context.PedidosDeServicios.ToListAsync();

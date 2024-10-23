@@ -20,6 +20,10 @@ public class PedidoDeServicios
     [ForeignKey("Sitio")]
     public int SitioId { get; set; }
 
+    public DateOnly FechaSolicitado { get; set; }
+
+    public DateOnly? FechaFinalizado { get; set; }
+
     public TipoPedido tipoPedido{ get; set; }
     public EstadoPedido estadoPedido{ get; set; }
 

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using ServiciosAdicionales.Models;
 using ServiciosAdicionales.Repository;
 using ServiciosAdicionales.Services;
+using ServiciosAdicionales.Services.Interfaces;
+using ServiciosAdicionales.ViewModels;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -12,13 +14,15 @@ namespace ServiciosAdicionales.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<Usuario> _userManager;
-        private readonly UsuarioService _usuarioService;
+        private readonly IUsuarioService _usuarioService;
+        private readonly IPedidoDeServicioService _pedidoDeServicioService;
 
-        public HomeController(ILogger<HomeController> logger, UserManager<Usuario> userManager, UsuarioService usuarioService)
+        public HomeController(ILogger<HomeController> logger, UserManager<Usuario> userManager, IUsuarioService usuarioService, IPedidoDeServicioService pedidosService)
         {
             _logger = logger;
             _userManager = userManager;
             _usuarioService = usuarioService;
+            _pedidoDeServicioService = pedidosService;
         }
 
         public async Task<IActionResult> Index()
@@ -29,12 +33,21 @@ namespace ServiciosAdicionales.Controllers
             if (userId != null)
             {
                 var usuario = await _usuarioService.ObtenerUsuarioPorIdAsync(userId);
-
-
-                return View(new List<PedidoDeServicios>());
+                if(usuario != null)
+                {
+                    var pedidos = await _pedidoDeServicioService.ObtenerPedidosDeSerivicioPorEmpleado(usuario);
+                    var lista = pedidos.Select(p => new PedidoDeServicioViewModel
+                    {
+                        Id = p.Id.ToString(),
+                        FechaSolicitado = p.FechaSolicitado,
+                        FechaFinalizado = p.FechaFinalizado,
+                        Estado = p.estadoPedido.ToString()
+                    }).ToList();
+                    return View(lista);
+                }                
             }
             
-            return View(new List<PedidoDeServicios>());
+            return View(new List<PedidoDeServicioViewModel>());
         }
 
         public IActionResult Privacy()

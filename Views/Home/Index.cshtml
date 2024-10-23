@@ -2,68 +2,52 @@
     ViewData["Title"] = "Tus Servicios";
 }
 
-@model string
+@model IEnumerable<ServiciosAdicionales.ViewModels.PedidoDeServicioViewModel>
 
 <div class="text-center">
     <h1 class="display-4">Tus Servicios Adicionales</h1>
+
+    <button type="button" class="btn btn-primary">Nuevo Pedido de Servicio</button>
+
     @if (Model.Any())
     {
-        Model.ToString();
-    }
-    <button type="button" class="btn btn-primary">Nuevo Pedido de Servicio</button>
-    <div class="container text-center" style="margin-top:10px;">
-        <div class="row">           
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        
-                        <th scope="col">ID</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Cant. Servicios</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">Ver</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>3</td>
-                        <td>10-10-2024</td>
-                        <td>2</td>
-                        <td>En curso</td>
-                        <td>
-                            <button type="button" class="btn btn-primary btn-sm">
-                                <i class="bi bi-search"></i>
-                            </button>
-                        </td>
-                        
-                    </tr>                    
-                    <tr>                        
-                        <td>2</td>
-                        <td>24-09-2024</td>
-                        <td>6</td>
-                        <td>Finalizado</td>
-                        <td>
-                            <button type="button" class="btn btn-primary btn-sm">
-                                <i class="bi bi-search"></i>
-                            </button>
-                        </td>                        
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>01-08-2024</td>
-                        <td>4</td>
-                        <td>Finalizado</td>
-                        <td>
-                            <button type="button" class="btn btn-primary btn-sm">
-                                <i class="bi bi-search"></i>
-                            </button>
-                        </td>
-                        
-                    </tr>                  
-                  
-                </tbody>
+        <div class="container text-center" style="margin-top:10px;">
+            <div class="row">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
 
-            </table>
+                            <th scope="col">ID</th>
+                            <th scope="col">Fecha Solicitud</th>
+                            <th scope="col">Fecha Finalizado</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Ver</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var pedido in Model)
+                        {
+                            <tr>
+                                <td>@pedido.Id</td>
+                                <td>@pedido.FechaSolicitado</td>
+                                <td>@pedido.FechaFinalizado</td>
+                                <td>@pedido.Estado</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-sm">
+                                        <i class="bi bi-search"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <p>No tienen pedidos de servicio registrados</p>
+    }
+
+    
 </div>

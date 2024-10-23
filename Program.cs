@@ -19,6 +19,7 @@ builder.Services.AddScoped<ISectorService, SectorService>();
 builder.Services.AddScoped<IServicioService, ServicioService>();
 builder.Services.AddScoped<ISitioService, SitioService>();
 builder.Services.AddScoped<ITipoAdicionalService, TipoAdicionalService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 builder.Services.AddIdentity<Usuario, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
