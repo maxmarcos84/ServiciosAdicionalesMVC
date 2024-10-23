@@ -27,8 +27,6 @@ namespace ServiciosAdicionales.Controllers
 
         public async Task<IActionResult> Index()
         {
-            //Terminar esto URGENTE tiene que devolver una lista de pedidosdeservicio pero hay que hacer el viewmodel
-            //de los mismos
             var userId = _userManager.GetUserId(User);
             if (userId != null)
             {

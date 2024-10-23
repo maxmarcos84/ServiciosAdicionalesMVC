@@ -18,7 +18,9 @@ public class PedidoDeServicios
     public Usuario Empleado { get; set; }
 
     [ForeignKey("Sitio")]
-    public int SitioId { get; set; }
+    public int? SitioId { get; set; }
+
+    public Sitio? Sitio { get; set; }
 
     public DateOnly FechaSolicitado { get; set; }
 
